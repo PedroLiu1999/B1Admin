@@ -58,7 +58,11 @@ export const ManageChurch = () => {
 
   return (
     <>
-      <PageHeader title={church.data?.name || Locale.label("settings.manageChurch.title")} subtitle={church.data?.subDomain ? `${church.data.subDomain}.b1.church` : Locale.label("settings.manageChurch.subtitle")}>
+      <PageHeader title={church.data?.name || Locale.label("settings.manageChurch.title")} subtitle={church.data?.subDomain
+        ? (process.env.REACT_APP_B1_WEBSITE_URL
+            ? process.env.REACT_APP_B1_WEBSITE_URL.replace("{subdomain}", church.data.subDomain)
+            : `${church.data.subDomain}.b1.church`)
+        : Locale.label("settings.manageChurch.subtitle")}>
         <Stack direction="row" spacing={1}>
           {UserHelper.checkAccess(Permissions.membershipApi.settings.edit) && (
             <Button
@@ -109,23 +113,25 @@ export const ManageChurch = () => {
               Audit Log
             </Button>
           )}
-          <Button
-            variant="outlined"
-            startIcon={<PlayArrowIcon />}
-            href={`https://transfer.b1.church/login?jwt=${jwt}&churchId=${churchId}`}
-            target="_blank"
-            rel="noreferrer noopener"
-            sx={{
-              color: "#FFF",
-              backgroundColor: "transparent",
-              borderColor: "#FFF",
-              "&:hover": {
-                backgroundColor: "rgba(255,255,255,0.2)",
-                color: "#FFF"
-              }
-            }}>
-            {Locale.label("settings.manageChurch.imEx")}
-          </Button>
+          {process.env.REACT_APP_STAGE !== "selfhost" && (
+            <Button
+              variant="outlined"
+              startIcon={<PlayArrowIcon />}
+              href={`https://transfer.b1.church/login?jwt=${jwt}&churchId=${churchId}`}
+              target="_blank"
+              rel="noreferrer noopener"
+              sx={{
+                color: "#FFF",
+                backgroundColor: "transparent",
+                borderColor: "#FFF",
+                "&:hover": {
+                  backgroundColor: "rgba(255,255,255,0.2)",
+                  color: "#FFF"
+                }
+              }}>
+              {Locale.label("settings.manageChurch.imEx")}
+            </Button>
+          )}
         </Stack>
       </PageHeader>
 

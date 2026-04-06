@@ -11,9 +11,10 @@ export class EnvironmentHelper {
     const stage = process.env.REACT_APP_STAGE;
 
     switch (stage) {
-      case "staging": EnvironmentHelper.initStaging(); break;
-      case "prod": EnvironmentHelper.initProd(); break;
-      default: EnvironmentHelper.initDev(); break;
+      case "staging":  EnvironmentHelper.initStaging(); break;
+      case "prod":     EnvironmentHelper.initProd(); break;
+      case "selfhost": EnvironmentHelper.initSelfhost(); break;
+      default:         EnvironmentHelper.initDev(); break;
     }
     EnvironmentHelper.Common.init(stage);
 
@@ -43,6 +44,12 @@ export class EnvironmentHelper {
   };
 
   static initLocal = async () => { };
+
+  // Self-hosted deployment — read everything from env vars, no staging fallback
+  static initSelfhost = () => {
+    EnvironmentHelper.LessonsApi = process.env.REACT_APP_LESSONS_API || "";
+    EnvironmentHelper.B1Url      = process.env.REACT_APP_B1_WEBSITE_URL || "";
+  };
 
   static initDev = () => {
     this.initStaging();

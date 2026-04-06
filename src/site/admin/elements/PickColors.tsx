@@ -32,7 +32,7 @@ export function PickColors(props: Props) {
       case "background": props.updatedCallback(val, props.textColor, props.headingColor, props.linkColor); break;
       case "backgroundType":
         switch (val) {
-          case "image": props.updatedCallback("https://content.churchapps.org/stockPhotos/4/bible.png", props.textColor, props.headingColor, props.linkColor); break;
+          case "image": props.updatedCallback((process.env.REACT_APP_CONTENT_ROOT || "https://content.churchapps.org") + "/stockPhotos/4/bible.png", props.textColor, props.headingColor, props.linkColor); break;
           case "youtube": props.updatedCallback("youtube:3iXYciBTQ0c", props.textColor, props.headingColor, props.linkColor); break;
           default: props.updatedCallback("#000000", props.textColor, props.headingColor, props.linkColor); break;
         }

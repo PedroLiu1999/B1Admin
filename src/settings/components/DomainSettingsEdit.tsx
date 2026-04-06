@@ -161,28 +161,36 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
 
   return (
     <Box>
-      <Box sx={{
-        p: 2,
-        mb: 2,
-        bgcolor: "action.hover",
-        borderRadius: 2,
-        border: "1px solid",
-        borderColor: "divider"
-      }}>
-        <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.7 }}>
-          {Locale.label("settings.domainSettingsEdit.domMsg")} <code style={{ backgroundColor: "rgba(0,0,0,0.08)", padding: "2px 6px", borderRadius: 4, fontFamily: "monospace" }}>CNAME: proxy.b1.church</code>
-          {Locale.label("settings.domainSettingsEdit.domMsg2")} <code style={{ backgroundColor: "rgba(0,0,0,0.08)", padding: "2px 6px", borderRadius: 4, fontFamily: "monospace" }}>A: 3.23.251.61</code>
-          {Locale.label("settings.domainSettingsEdit.domMsg3")}{" "}
-          <Typography
-            component="span"
-            onClick={relink}
-            sx={{ color: "primary.main", cursor: "pointer", textDecoration: "underline", "&:hover": { color: "primary.dark" } }}
-          >
-            {Locale.label("settings.domainSettingsEdit.domMsgConnect")}
-          </Typography>
-          {Locale.label("settings.domainSettingsEdit.domMsg4")}
-        </Typography>
-      </Box>
+      {process.env.REACT_APP_STAGE === "selfhost"
+        ? (
+          <Box sx={{ p: 2, mb: 2, bgcolor: "action.hover", borderRadius: 2, border: "1px solid", borderColor: "divider" }}>
+            <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.7 }}>
+              To use a custom domain, point it to your server with an{" "}
+              <code style={{ backgroundColor: "rgba(0,0,0,0.08)", padding: "2px 6px", borderRadius: 4, fontFamily: "monospace" }}>A</code>{" "}
+              record to your server{"'"}s public IP, or a{" "}
+              <code style={{ backgroundColor: "rgba(0,0,0,0.08)", padding: "2px 6px", borderRadius: 4, fontFamily: "monospace" }}>CNAME</code>{" "}
+              to your base domain. Then click{" "}
+              <Typography component="span" onClick={relink} sx={{ color: "primary.main", cursor: "pointer", textDecoration: "underline", "&:hover": { color: "primary.dark" } }}>
+                Connect
+              </Typography>{" "}
+              to provision a TLS certificate automatically.
+            </Typography>
+          </Box>
+        )
+        : (
+          <Box sx={{ p: 2, mb: 2, bgcolor: "action.hover", borderRadius: 2, border: "1px solid", borderColor: "divider" }}>
+            <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.7 }}>
+              {Locale.label("settings.domainSettingsEdit.domMsg")} <code style={{ backgroundColor: "rgba(0,0,0,0.08)", padding: "2px 6px", borderRadius: 4, fontFamily: "monospace" }}>CNAME: proxy.b1.church</code>
+              {Locale.label("settings.domainSettingsEdit.domMsg2")} <code style={{ backgroundColor: "rgba(0,0,0,0.08)", padding: "2px 6px", borderRadius: 4, fontFamily: "monospace" }}>A: 3.23.251.61</code>
+              {Locale.label("settings.domainSettingsEdit.domMsg3")}{" "}
+              <Typography component="span" onClick={relink} sx={{ color: "primary.main", cursor: "pointer", textDecoration: "underline", "&:hover": { color: "primary.dark" } }}>
+                {Locale.label("settings.domainSettingsEdit.domMsgConnect")}
+              </Typography>
+              {Locale.label("settings.domainSettingsEdit.domMsg4")}
+            </Typography>
+          </Box>
+        )
+      }
 
       {error && <Alert severity="error" sx={{ mb: 2, borderRadius: 2 }}>{error}</Alert>}
 

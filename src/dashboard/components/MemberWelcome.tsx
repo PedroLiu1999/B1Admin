@@ -40,9 +40,11 @@ export const MemberWelcome: React.FC = () => {
             <Grid size={{ xs: 12, sm: 6, md: 4 }}>
               <FeatureCard icon={<Event fontSize="large" />} title="See What's Happening" description="Check out upcoming events, service times, and ways to get involved." linkUrl={b1Url} external />
             </Grid>
-            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-              <FeatureCard icon={<PhoneIphone fontSize="large" />} title="Download the Mobile App" description="Get the B1.church app on your phone to stay connected wherever you go." linkUrl="https://b1.church/app" external />
-            </Grid>
+            {process.env.REACT_APP_STAGE !== "selfhost" && (
+              <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                <FeatureCard icon={<PhoneIphone fontSize="large" />} title="Download the Mobile App" description="Get the B1.church app on your phone to stay connected wherever you go." linkUrl="https://b1.church/app" external />
+              </Grid>
+            )}
           </Grid>
         </Box>
       </Container>

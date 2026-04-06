@@ -176,7 +176,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
     <GalleryModal
       onSelect={handlePhotoSelected}
       onCancel={() => setShowGalleryModal(false)}
-      contentRoot="https://contentdemo.churchapps.org"
+      contentRoot={process.env.REACT_APP_CONTENT_ROOT || "https://contentdemo.churchapps.org"}
       aspectRatio={16 / 9}
     />
   );
