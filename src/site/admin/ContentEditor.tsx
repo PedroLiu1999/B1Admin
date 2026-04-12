@@ -199,6 +199,9 @@ export function ContentEditor(props: Props) {
             section={section}
             churchSettings={churchSettings}
             onEdit={handleSectionEdit}
+            onDelete={() => {
+              loadDataInternal("After deleting section");
+            }}
             onMove={() => {
               loadDataInternal("After moving section");
             }}
